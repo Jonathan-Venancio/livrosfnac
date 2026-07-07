@@ -1,0 +1,7 @@
+strealit
+pandas
+easyocr
+opencv-python
+numpy
+python-barcode
+Pillow
