@@ -1,7 +1,7 @@
-strealit
+streamlit
 pandas
 easyocr
-opencv-python
+opencv-python-headless
 numpy
 python-barcode
 Pillow
