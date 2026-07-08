@@ -1,7 +1,7 @@
 streamlit
-pandas
-easyocr
 opencv-python-headless
 numpy
-python-barcode
+pandas
 Pillow
+python-barcode
+rapidocr-onnxruntime

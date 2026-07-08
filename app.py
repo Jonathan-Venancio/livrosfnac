@@ -1,36 +1,28 @@
 import streamlit as st
 from PIL import Image
 
-from barcode_utils import gerar_barcode
-from ocr import ler_imagem
+from modules.image import preparar_imagem
+from modules.table import detectar_linhas
+from modules.parser import extrair_produtos
+from modules.ui import mostrar_produtos
 
-st.set_page_config(page_title="Leitor de EAN")
+st.set_page_config(layout="wide")
 
-st.title("📚 Leitor de Lista de Livros")
+st.title("Leitor de Lista de Livros")
 
 arquivo = st.file_uploader(
-    "Envie uma foto da folha",
-    type=["jpg", "png", "jpeg"]
+    "Escolha uma foto",
+    type=["jpg","jpeg","png"]
 )
 
 if arquivo:
 
     imagem = Image.open(arquivo)
 
-    st.image(imagem)
+    imagem = preparar_imagem(imagem)
 
-    produtos = ler_imagem(imagem)
+    linhas = detectar_linhas(imagem)
 
-    st.success(f"{len(produtos)} produtos encontrados")
+    produtos = extrair_produtos(linhas)
 
-    for produto in produtos:
-
-        st.divider()
-
-        st.subheader(produto["descricao"])
-
-        st.write(produto["ean"])
-
-        codigo = gerar_barcode(produto["ean"])
-
-        st.image(codigo)
+    mostrar_produtos(produtos)
