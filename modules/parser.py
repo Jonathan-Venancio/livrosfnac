@@ -1,26 +1,18 @@
-from rapidocr_onnxruntime import RapidOCR
+from pyzbar import pyzbar
+import cv2
 
-engine=RapidOCR()
-
-def extrair_produtos(linhas):
-
-    produtos=[]
-
-    for linha in linhas:
-
-        ean_img=linha[:,0:270]
-
-        nome_img=linha[:,280:]
-
-        ean=engine(ean_img)
-
-        nome=engine(nome_img)
-
-        if ean:
-
+def extrair_produtos(imagem):
+    produtos = []
+    
+    decoded_objects = pyzbar.decode(imagem)
+    
+    for obj in decoded_objects:
+        ean = obj.data.decode('utf-8')
+        
+        if len(ean) == 13 and ean.isdigit():
             produtos.append({
-                "ean":ean[0][1],
-                "nome":nome[0][1]
+                "ean": ean,
+                "nome": f"Produto {ean}"
             })
-
+    
     return produtos

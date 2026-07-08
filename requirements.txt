@@ -4,4 +4,4 @@ numpy
 pandas
 Pillow
 python-barcode
-rapidocr-onnxruntime
+pyzbar
