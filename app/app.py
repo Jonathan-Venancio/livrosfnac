@@ -1,8 +1,8 @@
 import streamlit as st
 from PIL import Image
 
-from app.barcode_utils import gerar_barcode
-from app.ocr import ler_imagem
+from barcode_utils import gerar_barcode
+from ocr import ler_imagem
 
 st.set_page_config(page_title="Leitor de EAN")
 
@@ -10,7 +10,7 @@ st.title("📚 Leitor de Lista de Livros")
 
 arquivo = st.file_uploader(
     "Envie uma foto da folha",
-    type=["jpg", "png", "jpeg"]
+    type=["jpg", "jpeg", "png"]
 )
 
 if arquivo:
@@ -19,7 +19,9 @@ if arquivo:
 
     st.image(imagem)
 
-    produtos = ler_imagem(imagem)
+    with st.spinner("Lendo imagem..."):
+
+        produtos = ler_imagem(imagem)
 
     st.success(f"{len(produtos)} produtos encontrados")
 
